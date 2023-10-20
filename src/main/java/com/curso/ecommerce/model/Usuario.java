@@ -2,6 +2,8 @@ package com.curso.ecommerce.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 
 @Table(name = "usuarios")
@@ -17,6 +19,10 @@ public class Usuario {
     private String tipo;
     private String password;
 
+    @OneToMany(mappedBy = "usuario")
+    private List<Producto> productos;
+    @OneToMany(mappedBy = "usuario")
+    private List<Orden> ordenes;
     public Usuario() {
     }
 
@@ -108,4 +114,12 @@ public class Usuario {
                 ", password='" + password + '\'' +
                 '}';
     }
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
+
 }
