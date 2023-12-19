@@ -37,21 +37,21 @@ public class ProductoController {
     }
 
     @PostMapping("/save")
-    public String save(Producto producto,@RequestParam("img") MultipartFile file) throws IOException {
+    public String save(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
         LOGGER.info("Este es el objeto producto {}", producto);
         Usuario usuario = new Usuario(1, "", "", "", "", "", "", "");
         producto.setUsuario(usuario);
 
         //imagen
-        if (producto.getId() == null){// cuando se crea un producto por primera vez
-          String nombreImagen = upload.saveImage(file);
-          producto.setImagen(nombreImagen);
-        }else{
-            if (file.isEmpty()){// cuando se edita el producto pero no se cambia la imagen
+        if (producto.getId() == null) {// cuando se crea un producto por primera vez
+            String nombreImagen = upload.saveImage(file);
+            producto.setImagen(nombreImagen);
+        } else {
+            if (file.isEmpty()) {// identifica cuando se modifica el producto pero no se cambia la imagen
                 Producto product = new Producto();
                 product = productoService.get(producto.getId()).get();
                 producto.setImagen(product.getImagen());
-            }else{
+            } else {
                 String nombreImagen = upload.saveImage(file);
                 producto.setImagen(nombreImagen);
             }
